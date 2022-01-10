@@ -18,8 +18,8 @@ def get_ip():
     return ip
 
 # NO CLUE
-def receive_message(tcp_socket):
-    message = pickle.loads(tcp_socket.recv(1024))
+def receive_message(conn):
+    message = pickle.loads(conn.recv(1024))
     message_type = type(message)
     if isinstance(message_type, type(list)):
         time.sleep(1)
@@ -29,6 +29,16 @@ def receive_message(tcp_socket):
         time.sleep(1)
         return list((False, "ERROR"))
 
+def recv(tcp_socket):
+    recv = tcp_socket.recv(1024)
+    message = pickle.loads(recv).decode()
+    print(message)
+    return message
+
+def send(tcp_socket, text):
+    data = pickle.dumps(text)
+    tcp_socket.send(data)
+    
 # Encrypts a message
 def encrypt(text, key):
     fernet = Fernet(key)
