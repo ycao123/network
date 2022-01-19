@@ -1,5 +1,15 @@
-import requests, socket, pickle, sys, netifaces
-from cryptography.fernet import Fernet
+# Built-in modules
+import requests 
+import socket 
+import pickle
+import sys
+
+# Pip-installed modules
+try:
+    import netifaces
+except ImportError:
+    print("Missing these modules:\nnetifaces")
+#from cryptography.fernet import Fernet
 
 default_key = b'D_nB_gRXA6AjnbHDuIYyj74XFx8X8YlVWns1_4qF_sY='
 
@@ -17,18 +27,6 @@ def get_ip():
     print("IPv4: ", ip)
     return ip
 
-# NO CLUE
-def receive_message(conn):
-    message = pickle.loads(conn.recv(1024))
-    message_type = type(message)
-    if isinstance(message_type, type(list)):
-        time.sleep(1)
-        print("Received Data!")
-        return list((True, message))
-    else:
-        time.sleep(1)
-        return list((False, "ERROR"))
-
 def recv(tcp_socket):
     recv = tcp_socket.recv(1024)
     message = pickle.loads(recv).decode()
@@ -38,7 +36,7 @@ def recv(tcp_socket):
 def send(tcp_socket, text):
     data = pickle.dumps(text)
     tcp_socket.send(data)
-    
+'''   
 # Encrypts a message
 def encrypt(text, key):
     fernet = Fernet(key)
@@ -72,16 +70,4 @@ def load_key():
     else:
         key = default_key
     return key
-
-def send_text(text):
-    data = pickle.dumps(text)
-    udp_socket.sendto(data, server)
-
-def send_file(filename):
-    with open(file, "r"):
-        data = file.read()
-    send_text(data)
-
-# message = encrypt(["json.format", 1, {"1" : (0,1)}], key)
-# print(message)
-# print(decrypt(message, key))
+'''
