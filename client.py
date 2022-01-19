@@ -9,8 +9,8 @@ print("Initialising....\n")
 tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Fetch IPv4 of user
-self_ip = "127.0.0.1"
-self_port = 8080
+self_ip = socket.gethostname()
+self_port = random.randint("1024", "2047")
 self_tcp = (self_ip, self_port)
 
 server_ip = input("Enter server IPv4: ")
@@ -19,6 +19,8 @@ server_port = int(input("Enter server port: "))
 server = (server_ip, server_port)
 print(f"\nTrying to connect to {server}...\n")
 tcp_socket.connect(server)
+
+print("Connected!")
 
 # Send welcome message
 message = functions.send(tcp_socket, b"START")
