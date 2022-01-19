@@ -14,7 +14,7 @@ self_port = random.randint("1024", "2047")
 self_tcp = (self_ip, self_port)
 
 server_ip = input("Enter server IPv4: ")
-server_port = int(input("Enter server port: "))
+server_port = 8000
 
 server = (server_ip, server_port)
 print(f"\nTrying to connect to {server}...\n")
