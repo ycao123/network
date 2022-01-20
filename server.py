@@ -1,4 +1,3 @@
-# server.py
 import socket, sys, time, random, pickle
 import functions
 
