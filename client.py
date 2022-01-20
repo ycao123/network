@@ -1,5 +1,9 @@
-# client.py
-import socket, sys, time, random, pickle, functions
+import socket
+import sys
+import time
+import random
+import pickle
+import functions
 
 # Booting
 print("\nWelcome to Chat Room\n")
