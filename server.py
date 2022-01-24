@@ -1,5 +1,6 @@
-import socket, sys, time, random, pickle
-import functions
+# server.py
+import socket
+from functions import get_gateway_ip, receive, send
 
 # Booting
 print("\nWelcome to Chat Room\n")
@@ -21,7 +22,7 @@ print("\nTCP socket: ", self_tcp)
 
 # Prints the gateway/public IPv4
 print("FOR TEST. TRY BOTH IPS")
-functions.get_gateway_ip()
+get_gateway_ip()
 
 print("\nWaiting for connection...\n")
 
@@ -32,7 +33,7 @@ conn, addr = tcp_socket.accept()
 
 with conn:
     print("Connected by ", addr)
-    recv = functions.recv(conn)
-    functions.send(conn, b"END")
+    recv = receive(conn)
+    send(conn, b"END")
 
 tcp_socket.close()
