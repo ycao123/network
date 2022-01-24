@@ -1,6 +1,9 @@
-# server.py
+'''
+Server for TCP chat
+'''
+
 import socket
-from functions import get_gateway_ip, receive, send
+from functions import get_gateway_ip, receive, send, SERVER_PORT
 
 # Booting
 print("\nWelcome to Chat Room\n")
@@ -11,9 +14,8 @@ tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Creates the socket tuple
 self_ip = socket.gethostname()
-self_port = 8000
-print("Port: ", self_port)
-self_tcp = (self_ip, self_port)
+print("Port: ", SERVER_PORT)
+self_tcp = (self_ip, SERVER_PORT)
 
 # Binds to the host and port
 tcp_socket.bind(self_tcp)
@@ -28,7 +30,7 @@ print("\nWaiting for connection...\n")
 
 # Listens for any incoming connections
 tcp_socket.listen()
-    
+
 conn, addr = tcp_socket.accept()
 
 with conn:
