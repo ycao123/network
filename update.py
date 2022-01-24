@@ -15,7 +15,7 @@ def main():
     parent_directory = directory.replace("/network", "")
     chdir(parent_directory)
     try:
-        #delete_directory = check_output(["rm", "-R", "network"])
+        delete_directory = check_output(["rm", "-R", "network"])
         #git_clone = check_output(["git", "clone", "https://github.com/ycao123/network"])
         
     except CalledProcessError:
