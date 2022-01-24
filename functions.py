@@ -4,7 +4,7 @@ Functions and macros for TCP chat
 
 # Built-in modules
 import pickle
-import requests
+import socket
 import netifaces
 
 # Macros
@@ -22,13 +22,15 @@ def get_ip():
     "Gets the local IPv4"
     self_ip = socket.gethostbyname(socket.gethostname())
     print("IPv4: ", self_ip)
-    return ip
+    return self_ip
 
 def receive(tcp_socket):
+    "Receives message from tcp_socket"
     recv = tcp_socket.recv(1024)
     message = pickle.loads(recv).decode()
     return message
 
 def send(tcp_socket, text):
+    "Sends message 'text' with tcp_socket"
     data = pickle.dumps(text)
     tcp_socket.send(data)
