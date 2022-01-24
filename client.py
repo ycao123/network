@@ -1,6 +1,7 @@
 '''
 Client for the TCP chat
 '''
+
 import socket
 from functions import send, receive, SERVER_PORT
 
@@ -15,8 +16,8 @@ tcp_socket.settimeout(3)
 
 # Fetch IPv4 of user
 self_ip = socket.gethostname()
-self_port = 12345
-self_tcp = (self_ip, self_port)
+SELF_PORT = 12345
+self_tcp = (self_ip, SELF_PORT)
 
 # Ask for server IP
 server_ip = input("Enter server IPv4: ")
