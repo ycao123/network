@@ -16,7 +16,9 @@ def main():
     chdir(parent_directory)
     try:
         delete_directory = check_output(["rm", "-R", "network"])
-        #git_clone = check_output(["git", "clone", "https://github.com/ycao123/network"])
+        print("Deleted Directory")
+        git_clone = check_output(["git", "clone", "https://github.com/ycao123/network"])
+        print("Git cloned")
         
     except CalledProcessError:
         print("Error: Bad Stuff Detected")
