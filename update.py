@@ -24,8 +24,7 @@ def main():
         print("Error: Bad Stuff Detected")
         exit(1)
 
-    #git_clone = git_clone.decode()
-    #print(git_clone)
+    print(git_clone)
 
 if __name__ == "__main__":
     main()
