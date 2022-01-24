@@ -1,34 +1,32 @@
+'''
+Functions and macros for TCP chat
+'''
+
 # Built-in modules
-import requests 
-import socket 
 import pickle
-import sys
+import requests
+import netifaces
 
-# Pip-installed modules
-try:
-    import netifaces
-except ImportError:
-    print("Missing these modules:\nnetifaces")
+# Macros
+SERVER_PORT = 8000
 
-# Gets the gateway/public IPv4
 def get_gateway_ip():
+    "Gets the gateway/public IPv4"
     en0_addr = netifaces.ifaddresses("en0")
     inet_addr = en0_addr[2]
     gateway_addr = inet_addr[0]['broadcast']
     print(gateway_addr)
     return gateway_addr
 
-# Gets local IPv4
 def get_ip():
-    "Gets the local IPv4 of the "
-    ip = socket.gethostbyname(socket.gethostname())
-    print("IPv4: ", ip)
+    "Gets the local IPv4"
+    self_ip = socket.gethostbyname(socket.gethostname())
+    print("IPv4: ", self_ip)
     return ip
 
-def recv(tcp_socket):
+def receive(tcp_socket):
     recv = tcp_socket.recv(1024)
     message = pickle.loads(recv).decode()
-    print(message)
     return message
 
 def send(tcp_socket, text):
