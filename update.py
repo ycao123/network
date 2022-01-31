@@ -18,7 +18,7 @@ def main():
         delete_directory = check_output(["rm", "-R", "network"])
         print("Deleted Directory")
         git_clone = check_output(["git", "clone", "https://github.com/ycao123/network"])
-        print("Git cloned")
+        print("Finished!")
         
     except CalledProcessError:
         print("Error: Bad Stuff Detected")
