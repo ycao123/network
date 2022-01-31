@@ -37,5 +37,6 @@ with conn:
     print("Connected by ", addr)
     recv = receive(conn)
     send(conn, b"END")
-
+    
+tcp_socket.getpeername()
 tcp_socket.close()
