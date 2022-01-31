@@ -38,5 +38,5 @@ with conn:
     recv = receive(conn)
     send(conn, b"END")
     
-tcp_socket.getpeername()
-tcp_socket.close()
+conn.getpeername()
+conn.close()
