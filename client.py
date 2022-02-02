@@ -15,7 +15,7 @@ tcp_socket.settimeout(3)
 
 
 # Fetch IPv4 of user
-self_ip = socket.gethostname()
+self_ip = "0.0.0.0"
 SELF_PORT = 12345
 self_tcp = (self_ip, SELF_PORT)
 
