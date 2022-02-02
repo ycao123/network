@@ -13,17 +13,15 @@ print("Initialising....\n")
 tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Creates the socket tuple
-self_ip = socket.gethostname()
+self_ip = "0.0.0.0"
 print("Port: ", SERVER_PORT)
 self_tcp = (self_ip, SERVER_PORT)
 
 # Binds to the host and port
 tcp_socket.bind(self_tcp)
-print("\nIP address: ", self_ip)
-print("\nTCP socket: ", self_tcp)
 
 # Prints the gateway/public IPv4
-print("FOR TEST. TRY BOTH IPS")
+print("Server IPv4: ")
 get_gateway_ip()
 
 print("\nWaiting for connection...\n")
