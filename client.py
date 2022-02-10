@@ -10,7 +10,7 @@ print("\nWelcome to Chat Room\n")
 print("Initialising....\n")
 
 # Create the socket
-tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+tcp_socket = socket.socket()
 tcp_socket.settimeout(3)
 
 
