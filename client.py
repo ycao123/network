@@ -11,7 +11,7 @@ print("Initialising....\n")
 
 # Create the socket
 tcp_socket = socket.socket()
-tcp_socket.settimeout(3)
+tcp_socket.settimeout(10)
 
 
 # Fetch IPv4 of user
