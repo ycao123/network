@@ -16,6 +16,7 @@ tcp_socket = socket.socket()
 self_ip = "0.0.0.0"
 print("Port: ", SERVER_PORT)
 self_tcp = (self_ip, SERVER_PORT)
+print(f"Serving on {self_tcp}")
 
 # Binds to the host and port
 tcp_socket.bind(self_tcp)
