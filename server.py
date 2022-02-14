@@ -3,6 +3,8 @@ Server for TCP chat
 '''
 
 import socket
+
+from socket import gethostname as get_ip, gethostbyname
 from functions import get_gateway_ip, receive, send, SERVER_PORT
 
 # Booting
@@ -13,17 +15,16 @@ print("Initialising....\n")
 tcp_socket = socket.socket()
 
 # Creates the socket tuple
-self_ip = "0.0.0.0"
-print("Port: ", SERVER_PORT)
+self_ip = socket.gethostname()
 self_tcp = (self_ip, SERVER_PORT)
-print(f"Serving on {self_tcp}")
 
 # Binds to the host and port
 tcp_socket.bind(self_tcp)
+tcp_socket.listen(5)
 
 # Prints the gateway/public IPv4
-print("Server IPv4: ")
-get_gateway_ip()
+print(f"Serving on {self_tcp}")
+print("Ip: ", get_ip())
 
 print("\nWaiting for connection...\n")
 
@@ -31,11 +32,16 @@ print("\nWaiting for connection...\n")
 tcp_socket.listen()
 
 conn, addr = tcp_socket.accept()
-
-with conn:
-    print("Connected by ", addr)
-    recv = receive(conn)
-    send(conn, b"END")
+try:
+    with conn:
+        print("Connected by ", addr)
+        recv = receive(conn)
+        send(conn, b"END")
     
-conn.getpeername()
-conn.close()
+    conn.getpeername()
+except OSError as error:
+    print("OSError: ", str(error))
+except:
+    pass
+finally:
+    conn.close()

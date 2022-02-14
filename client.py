@@ -13,11 +13,12 @@ print("Initialising....\n")
 tcp_socket = socket.socket()
 tcp_socket.settimeout(10)
 
-
 # Fetch IPv4 of user
 self_ip = "0.0.0.0"
 SELF_PORT = 12345
 self_tcp = (self_ip, SELF_PORT)
+
+tcp_socket.bind(self_tcp)
 
 # Ask for server IP
 server_ip = input("Enter server IPv4: ")
