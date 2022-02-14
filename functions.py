@@ -1,6 +1,5 @@
 '''
 Functions and macros for TCP chat
-Just a quick test
 '''
 
 # Built-in modules
