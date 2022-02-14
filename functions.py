@@ -14,8 +14,9 @@ def get_gateway_ip():
     "Gets the gateway/public IPv4"
     en0_addr = netifaces.ifaddresses("en0")
     inet_addr = en0_addr[2]
-    gateway_addr = inet_addr[0]['broadcast']
-    print(gateway_addr)
+    self_addr = inet_addr[0]['addr']
+    gateway_addr = inet_addr
+    print("Self address: "self_addr)
     return gateway_addr
 
 def get_ip():
