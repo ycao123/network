@@ -16,7 +16,7 @@ def get_gateway_ip():
     inet_addr = en0_addr[2]
     self_addr = inet_addr[0]['addr']
     gateway_addr = inet_addr
-    print("Self address: "self_addr)
+    print("Self address: ", self_addr)
     return gateway_addr
 
 def get_ip():
