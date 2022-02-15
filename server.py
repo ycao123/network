@@ -11,7 +11,7 @@ import functions
 print("\nWelcome to Chat Room\n")
 print("Initialising....\n")
 
-# Create the socket
+# Start the tcp_socket
 tcp_socket = functions.start("server")
 
 conn, addr = tcp_socket.accept()

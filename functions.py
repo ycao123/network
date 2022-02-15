@@ -71,10 +71,11 @@ def start(mode):
         # Get server IP
         server_ip = input("Enter server IPv4: ")
 
+        # Try to connect
         server = (server_ip, SERVER_PORT)
         print(f"\nTrying to connect to {server}...\n")
         tcp_socket.connect(server)
-        
+
         return tcp_socket
 
     else:
