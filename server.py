@@ -44,4 +44,5 @@ except OSError as error:
 except:
     pass
 finally:
+    print("Thank you for joining!")
     conn.close()

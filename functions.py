@@ -5,14 +5,23 @@ Functions and macros for TCP chat
 # Built-in modules
 import pickle
 import socket
-import netifaces
+import sys
+
+try:
+    import netifaces
+except:
+    netifaces = None
 
 # Macros
 SERVER_PORT = 24680
 
 def get_gateway_ip():
     "Gets the gateway/public IPv4"
-    en0_addr = netifaces.ifaddresses("en0")
+    if netifaces:
+        en0_addr = netifaces.ifaddresses("en0")
+    else:
+        print("netifaces not found. Consider using 'python3 -m pip3 install netifaces'")
+        sys.exit(1)
     inet_addr = en0_addr[2]
     self_addr = inet_addr[0]['addr']
     gateway_addr = inet_addr
