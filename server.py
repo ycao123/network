@@ -29,3 +29,4 @@ except:
 finally:
     print("Thank you for joining!")
     conn.close()
+    tcp_socket.close()
