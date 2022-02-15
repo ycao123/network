@@ -3,37 +3,19 @@ Client for the TCP chat
 '''
 
 import socket
-from functions import send, receive, SERVER_PORT
-
+import functions
 # Booting up the chat room
 print("\nWelcome to Chat Room\n")
 print("Initialising....\n")
 
-# Create the socket
-tcp_socket = socket.socket()
-tcp_socket.settimeout(10)
-
-# Fetch IPv4 of user
-self_ip = "0.0.0.0"
-SELF_PORT = 12345
-self_tcp = (self_ip, SELF_PORT)
-
-tcp_socket.bind(self_tcp)
-
-# Ask for server IP
-server_ip = input("Enter server IPv4: ")
-
-# Try to connect to server
-server = (server_ip, SERVER_PORT)
-print(f"\nTrying to connect to {server}...\n")
-tcp_socket.connect(server)
+tcp_socket = functions.start("client")
 
 # Connected!
 print("Connected!")
 
 # Send welcome message
-send(tcp_socket, b"START")
-end = receive(tcp_socket)
+functions.send(tcp_socket, b"START")
+end = functions.receive(tcp_socket)
 print(end)
 
 # End the TCP session
