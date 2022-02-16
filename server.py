@@ -15,6 +15,7 @@ print("Initialising....\n")
 tcp_socket = functions.start("server")
 
 conn, addr = tcp_socket.accept()
+
 try:
     with conn:
         print("Connected by ", addr)
@@ -22,10 +23,10 @@ try:
         functions.send(conn, b"END")
     
     conn.getpeername()
-except OSError as error:
-    print("OSError: ", str(error))
-except:
-    pass
+# OSerror
+except Exception as error:
+    print(str(error))
+
 finally:
     print("Thank you for joining!")
     conn.close()
