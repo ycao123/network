@@ -32,7 +32,7 @@ def get_ip():
     "Gets the local IPv4"
     self_ip = socket.gethostbyname(socket.gethostname())
     return self_ip
-
+    
 def start(mode):
     # Booting
     print("\nWelcome to Chat Room\n")
@@ -82,6 +82,7 @@ def start(mode):
         print("Not a mode")
         tcp_socket.close()
         sys.exit(2)
+
 
 def receive(tcp_socket):
     "Receives message from tcp_socket"

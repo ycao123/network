@@ -4,6 +4,7 @@ Client for the TCP chat
 
 import socket
 import functions
+#from tcp_socket import __all__
 # Booting up the chat room
 print("\nWelcome to Chat Room\n")
 print("Initialising....\n")
