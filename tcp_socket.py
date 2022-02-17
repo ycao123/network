@@ -35,12 +35,13 @@ class ClientSocket(BaseSocket):
         self.server = (input("Enter server IPv4: "), SERVER_PORT)
         print("Server: ", self.server)
         self.tcp_socket.connect(self.server)
+        print("Connected to ", self.server)
 
 class ServerSocket(BaseSocket):
     "The server socket"
     def __init__(self):
         # Maybe change to get_ip if this doesn't work
-        super().__init__("0.0.0.0", SERVER_PORT)
+        super().__init__(get_ip(), SERVER_PORT)
         print("ServerSocket Called!")
         self.tcp_socket.listen(5)
         self.connected = False
@@ -49,7 +50,7 @@ class ServerSocket(BaseSocket):
         "Listens for connection"
         print("Started listening!")
         self.conn, self.addr = self.tcp_socket.accept()
-        print("Connected by", self.conn)
+        print("Connected by", self.addr)
         self.connected = True
 
 
