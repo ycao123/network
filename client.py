@@ -10,7 +10,7 @@ print("\nWelcome to Chat Room\n")
 print("Initialising....\n")
 
 # Start the tcp_socket
-tcp_socket = functions.start("client")
+tcp_socket = functions.start(1)
 
 # Connected!
 print("Connected!")
