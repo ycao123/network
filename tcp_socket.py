@@ -8,11 +8,6 @@ import sys
 
 SERVER_PORT = 23456
 
-def get_ip():
-    "Gets the local IPv4"
-    self_ip = socket.gethostbyname(socket.gethostname())
-    return self_ip
-
 def chmod(file, permission=755):
     check_output(["ls", "-l", file], stderr=STDOUT)
     check_output(["chmod", str(permission), file], stderr=STDOUT)
@@ -46,7 +41,7 @@ class ServerSocket(BaseSocket):
     "The server socket"
     def __init__(self) -> None:
         # Maybe change to get_ip if this doesn't work
-        super().__init__(get_ip(), SERVER_PORT)
+        super().__init__("0.0.0.0", SERVER_PORT)
         print("ServerSocket Called!")
         self.tcp_socket.listen(5)
         self.connected = False
@@ -58,12 +53,10 @@ class ServerSocket(BaseSocket):
         print("Connected by", self.addr)
         self.connected = True
 
-try:
-    if sys.argv[1] == "client":
-        a = ClientSocket()
-        a.connect()
-    elif sys.argv[1] == "server":
-        a = ServerSocket()
-        a.listen()
-except:
-    pass
+if sys.argv[1] == "client":
+    a = ClientSocket()
+    a.connect()
+elif sys.argv[1] == "server":
+    a = ServerSocket()
+    a.listen()
+
