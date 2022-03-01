@@ -19,4 +19,4 @@ end = functions.receive(tcp_socket)
 print(end)
 
 # End the TCP session
-tcp_socket.close()
+#tcp_socket.close()

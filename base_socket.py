@@ -22,8 +22,14 @@ class BaseSocket:
         self.ip = (self.addr, self.port)
         self.tcp_socket.bind(self.ip)
         print("Bound to: ", self.ip)
-    def send(self):
-        pass
+    def send(self, data):
+        self.tcp_socket.send(data)
+    def recv(self):
+        data = self.tcp_socket.recv(4096)
+        return data
+    def close(self):
+        self.tcp_socket.close()
+        print("Closed socket")
 
 class ClientSocket(BaseSocket):
     "The client socket"
@@ -52,11 +58,12 @@ class ServerSocket(BaseSocket):
         self.conn, self.addr = self.tcp_socket.accept()
         print("Connected by", self.addr)
         self.connected = True
-
-if sys.argv[1] == "client":
-    a = ClientSocket()
-    a.connect()
-elif sys.argv[1] == "server":
-    a = ServerSocket()
-    a.listen()
-
+try:
+    if sys.argv[1] == "client":
+        a = ClientSocket()
+        a.connect()
+    elif sys.argv[1] == "server":
+        a = ServerSocket()
+        a.listen()
+except:
+    pass
