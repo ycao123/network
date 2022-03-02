@@ -52,7 +52,8 @@ class ClientSocket(BaseSocket):
         self.tcp_socket.connect(self.server)
         print("Connected to ", self.server)
     def recv(self):
-        super().recv(self.tcp_socket)
+        value = super().recv(self.tcp_socket)
+        return value
 
 class ServerSocket(BaseSocket):
     "The server socket"
@@ -72,7 +73,8 @@ class ServerSocket(BaseSocket):
     def send(self, data) -> None:
         self.conn.send(data)
     def recv(self):
-        super().recv(self.conn)
+        value = super().recv(self.conn)
+        return value
 
 
 def main():
