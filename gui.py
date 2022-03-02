@@ -126,7 +126,9 @@ class Chat:
         self.message("ROOT", f"Received connection from {self.tcp_socket.return_addr}")
         
     def update(self):
-        received = self.tcp_socket.recv().decode()
+        received = self.tcp_socket.recv()
+        print(f"Got {received}")
+        received = received.decode()
         self.message("PEER", received)
     
 
