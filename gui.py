@@ -29,6 +29,7 @@ class Chat:
         self.main_window = tk.Text(self.frame, height=50, width=60, bg="#d3d2fa")
         self.entry_window = tk.Text(self.frame, height=5, width=80, bg="#c4f5cc")
         self.submit_button = tk.Button(self.frame, text="Submit", command=self.send)
+        self.refresh_button = tk.Button(self.frame, text="Receive", command=self.update)
         self.counter = 1
         self.main_window.configure(state="disabled")
 
@@ -125,14 +126,9 @@ class Chat:
         self.message("ROOT", f"Received connection from {self.tcp_socket.return_addr}")
         
     def update(self):
-        while True:
-            received = self.tcp_socket.recv()
-            update_thread = threading.Thread(target=self.handle_recv, args=(received,))
-            update_thread.start()
+        received = self.tcp_socket.recv().decode()
+        self.message("PEER", received)
     
-    def handle_recv(self, message):
-        message = message.decode()
-        self.message("PEER", message)
 
     def chat_client(self):
         self.get_server()
@@ -157,6 +153,7 @@ class Chat:
         self.exit_button.pack(side=tk.LEFT)
         self.main_window.pack(side=tk.TOP)
         self.submit_button.pack(side=tk.RIGHT)
+        self.refresh_button.pack(side=tk.LEFT)
         self.frame.pack()
         self.window.mainloop()
         print("exited start")
