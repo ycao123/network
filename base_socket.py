@@ -7,9 +7,10 @@ from subprocess import check_output, STDOUT
 import sys
 import random
 
-SERVER_PORT = 23456
+SERVER_PORT = 2345
 
 def chmod(file, permission=755):
+    "Changes file permissions"
     check_output(["ls", "-l", file], stderr=STDOUT)
     check_output(["chmod", str(permission), file], stderr=STDOUT)
     check_output(["ls", "-l", file], stderr=STDOUT)
@@ -20,15 +21,21 @@ class BaseSocket:
         self.tcp_socket = socket.socket()
         self.addr = addr
         self.port = port
-        self.ip = (self.addr, self.port)
-        self.tcp_socket.bind(self.ip)
-        print("Bound to: ", self.ip)
+        self.self_ip = (self.addr, self.port)
+        self.tcp_socket.bind(self.self_ip)
+        print("Bound to: ", self.self_ip)
+
     def send(self, data):
+        "Sends data"
         self.tcp_socket.send(data)
-    def recv(self):
-        data = self.tcp_socket.recv(4096)
+
+    def recv(self, socket_type):
+        "Receives data"
+        data = socket_type.recv(4096)
+        print(f"Received {data}")
         return data
     def close(self):
+        "Closes the socket"
         self.tcp_socket.close()
         print("Closed socket")
 
@@ -36,7 +43,9 @@ class ClientSocket(BaseSocket):
     "The client socket"
     def __init__(self, addr="0.0.0.0") -> None:
         # Gets the base elements
-        super().__init__(addr, random.randint(2096, 12345))
+        super().__init__(addr, random.randint(2096, 2344))
+        self.tcp_socket.settimeout(10)
+        self.server = ()
     def connect(self, server) -> None:
         "Connects to server"
         self.server = server
@@ -48,21 +57,28 @@ class ServerSocket(BaseSocket):
     def __init__(self) -> None:
         # Maybe change to get_ip if this doesn't work
         super().__init__("0.0.0.0", SERVER_PORT)
+        self.conn = ""
         print("ServerSocket Called!")
         self.tcp_socket.listen(5)
 
     def listen(self) -> None:
         "Listens for connection"
         print("Started listening!")
-        self.conn, self.addr = self.tcp_socket.accept()
-        print("Connected by", self.addr)
+        self.conn, self.return_addr = self.tcp_socket.accept()
+        print("Connected by", self.return_addr)
 
-try:
-    if sys.argv[1] == "client":
-        a = ClientSocket()
-        a.connect(input("Enter Server IPv4: "))
-    elif sys.argv[1] == "server":
-        a = ServerSocket()
-        a.listen()
-except BaseException as e:
-    print(e)
+
+def main():
+    "Main function"
+    try:
+        if sys.argv[1] == "client":
+            client_socket = ClientSocket()
+            client_socket.connect((input("Enter Server IPv4: "), SERVER_PORT))
+        elif sys.argv[1] == "server":
+            server_socket = ServerSocket()
+            server_socket.listen()
+    except BaseException as random_error:
+        print(random_error)
+
+if __name__ == "__main__":
+    main()
