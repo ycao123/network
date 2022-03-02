@@ -86,8 +86,8 @@ def main():
         elif sys.argv[1] == "server":
             server_socket = ServerSocket()
             server_socket.listen()
-    except BaseException as random_error:
-        print(random_error)
+    except BaseException as some_error:
+        print(some_error)
 
 if __name__ == "__main__":
     main()
