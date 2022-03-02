@@ -5,6 +5,7 @@ Creates client and server
 import socket
 from subprocess import check_output, STDOUT
 import sys
+import random
 
 SERVER_PORT = 23456
 
@@ -35,11 +36,10 @@ class ClientSocket(BaseSocket):
     "The client socket"
     def __init__(self, addr="0.0.0.0") -> None:
         # Gets the base elements
-        super().__init__(addr, 12345)
-    def connect(self) -> None:
+        super().__init__(addr, random.randint(2096, 12345))
+    def connect(self, server) -> None:
         "Connects to server"
-        self.server = (input("Enter server IPv4: "), SERVER_PORT)
-        print("Server: ", self.server)
+        self.server = server
         self.tcp_socket.connect(self.server)
         print("Connected to ", self.server)
 
@@ -50,20 +50,19 @@ class ServerSocket(BaseSocket):
         super().__init__("0.0.0.0", SERVER_PORT)
         print("ServerSocket Called!")
         self.tcp_socket.listen(5)
-        self.connected = False
 
     def listen(self) -> None:
         "Listens for connection"
         print("Started listening!")
         self.conn, self.addr = self.tcp_socket.accept()
         print("Connected by", self.addr)
-        self.connected = True
+
 try:
     if sys.argv[1] == "client":
         a = ClientSocket()
-        a.connect()
+        a.connect(input("Enter Server IPv4: "))
     elif sys.argv[1] == "server":
         a = ServerSocket()
         a.listen()
-except:
-    pass
+except BaseException as e:
+    print(e)
