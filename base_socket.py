@@ -51,6 +51,8 @@ class ClientSocket(BaseSocket):
         self.server = server
         self.tcp_socket.connect(self.server)
         print("Connected to ", self.server)
+    def recv(self):
+        super().recv(self.tcp_socket)
 
 class ServerSocket(BaseSocket):
     "The server socket"
@@ -66,6 +68,11 @@ class ServerSocket(BaseSocket):
         print("Started listening!")
         self.conn, self.return_addr = self.tcp_socket.accept()
         print("Connected by", self.return_addr)
+
+    def send(self, data) -> None:
+        self.conn.send(data)
+    def recv(self):
+        super().recv(self.conn)
 
 
 def main():
