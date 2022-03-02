@@ -3,10 +3,8 @@ The GUI builder for the chat
 '''
 
 # Imports
-import time
 import tkinter as tk
 import sys
-import threading
 from ipaddress import ip_address
 from base_socket import BaseSocket, ClientSocket, ServerSocket, SERVER_PORT
 
@@ -17,7 +15,9 @@ class Chat:
 
         # Sees if it is a subclass of BaseSocket
         if not issubclass(type(tcp_socket), BaseSocket):
-            raise AttributeError("Error: Please make sure to use ClientSocket or ServerSocket for the tcp_socket")       
+            raise AttributeError(
+                "Error: Please make sure to use ClientSocket or ServerSocket for the tcp_socket"
+                )
         # Self variables
         self.tcp_socket = tcp_socket
         self.server_ip = ["", SERVER_PORT]
@@ -43,7 +43,6 @@ class Chat:
     def get_server(self):
         "Asks for the server"
         # Starting the window
-        print("Entered get_server")
         server_tk = tk.Tk()
         server_tk.geometry("400x150")
         server_tk.title("Please enter server IPv4")
@@ -55,17 +54,15 @@ class Chat:
                                text="Submit",
                                command=lambda: self.server_ent_quit(server_tk,
                                                                     ent_entry))
-
         # Packing/running them
         lbl_message.pack()
         ent_entry.pack()
         btn_submit.pack()
 
-        print("Mainloop")
         server_tk.mainloop()
-        
+
     def server_ent_quit(self, master, ent=None) -> None:
-        print("Entered server_ent_quit")
+        "The quit fucntion for the get_server() function"
         if ent:
             text = ent.get()
         try:
@@ -81,22 +78,23 @@ class Chat:
                     master.destroy()
                     self.message("ROOT", "Connected!")
                     self.start()
-                except BaseException as e:
-                    print(e)
+                except BaseException as error:
+                    print(error)
                     master.title(f"Failed to connect to {text}. Please try again")
-                    raise ValueError
+                    raise ValueError from error
             master.destroy()
-        except BaseException as e:
-            print(e)
-        print("exited server_ent_quit")
+        except ValueError as error:
+            print(error)
 
     def quit(self):
+        "Quit the chat"
         print("Thank you for going the chat!")
         self.window.destroy()
         if self.connected:
             self.tcp_socket.close()
 
     def message(self, username, text):
+        "Add a message"
         # Disable to enable editing
         self.main_window.configure(state="normal")
 
@@ -104,28 +102,30 @@ class Chat:
 
         # Change text window
         self.main_window.insert(f"{self.counter}.0", f"{username}: {text}\n")
-        self.counter += 1
+
+        length = text.split("\n")
+        self.counter += len(length)
 
         # Enable to disable editing
         self.main_window.configure(state="disabled")
 
     def chat_server(self):
-        print("entered chat_server")
+        "Redirect to listen()"
         self.listen()
-        
 
     def listen(self):
-        print("entered listen")
+        "Start listening button"
         start_button = tk.Button(text="Start listening", command=self.start_listen)
         start_button.pack()
         self.start()
 
     def start_listen(self):
-        print("entered start_listen")
+        "Start the listening"
         self.tcp_socket.listen()
         self.message("ROOT", f"Received connection from {self.tcp_socket.return_addr}")
-        
+     
     def update(self):
+        "Update the window"
         received = self.tcp_socket.recv()
         print(f"Got {received}")
         received = received.decode()
@@ -133,6 +133,7 @@ class Chat:
     
 
     def chat_client(self):
+        "Redirect to get_server()"
         self.get_server()
 
     
@@ -147,10 +148,9 @@ class Chat:
         self.message("user", entry)
         # Clear window
         self.entry_window.delete("1.0", tk.END)
-        
+ 
     def start(self):
-        print("entered start")
-        # Packs/running widgets/frames
+        "Packs/running widgets/frames"
         self.entry_window.pack(side=tk.BOTTOM)
         self.exit_button.pack(side=tk.LEFT)
         self.main_window.pack(side=tk.TOP)
@@ -158,7 +158,6 @@ class Chat:
         self.refresh_button.pack(side=tk.LEFT)
         self.frame.pack()
         self.window.mainloop()
-        print("exited start")
 
 try:
     if sys.argv[1] == "client":
@@ -169,5 +168,5 @@ try:
         print("You are in SERVER mode")
         a = ServerSocket()
         b = Chat(a)
-except BaseException as error:
+except IndexError as error:
     print(error)
